@@ -1,0 +1,6 @@
+{
+  "name": "Technical Knowledge Base",
+  "description": "ระบบฐานความรู้บันทึกและค้นหาวิธีแก้ปัญหาทางเทคนิค (Nutanix, Lenovo และระบบโครงสร้างพื้นฐาน) ค้นหาชื่อเคสแล้วพบวิธีแก้ทันที",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
