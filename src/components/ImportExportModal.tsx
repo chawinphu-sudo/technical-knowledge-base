@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { X, Download, Upload, RotateCcw, Check, AlertCircle, FileJson, ShieldAlert } from 'lucide-react';
+import { X, Download, Upload, RotateCcw, Check, AlertCircle, FileJson, ShieldAlert, FileText } from 'lucide-react';
 import { KnowledgeCase } from '../types';
 import { exportCasesAsJSON, validateImportedCases } from '../utils/storage';
+import { downloadMultipleCasesAsMarkdown } from '../utils/kbExport';
 
 interface ImportExportModalProps {
   isOpen: boolean;
@@ -109,14 +110,26 @@ export const ImportExportModal: React.FC<ImportExportModalProps> = ({
             <p className="text-2xs text-slate-400">
               ดาวน์โหลดฐานข้อมูลทั้งหมดในรูปแบบไฟล์ JSON สามารถแชร์ให้ทีม IT หรือเก็บไว้เป็น Backup
             </p>
-            <button
-              type="button"
-              onClick={handleExport}
-              className="w-full mt-1 py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition flex items-center justify-center gap-1.5 shadow-xs"
-            >
-              <Download className="h-4 w-4" />
-              <span>ดาวน์โหลดไฟล์ JSON ({cases.length} รายการ)</span>
-            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
+              <button
+                type="button"
+                onClick={handleExport}
+                className="py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition flex items-center justify-center gap-1.5 shadow-xs text-xs"
+              >
+                <Download className="h-4 w-4" />
+                <span>โหลดไฟล์ JSON ({cases.length})</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => downloadMultipleCasesAsMarkdown(cases, 'enterprise-kb-handbook')}
+                className="py-2 px-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-lg transition flex items-center justify-center gap-1.5 shadow-xs text-xs"
+                title="ดาวน์โหลดเคสทั้งหมดรวมเป็นคู่มือ Markdown (.md)"
+              >
+                <FileText className="h-4 w-4 text-emerald-400" />
+                <span>โหลดคู่มือ .MD ({cases.length})</span>
+              </button>
+            </div>
           </div>
 
           {/* Import Section */}

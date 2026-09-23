@@ -17,6 +17,7 @@ import { CaseFormModal } from './components/CaseFormModal';
 import { CheatSheetModal } from './components/CheatSheetModal';
 import { ImportExportModal } from './components/ImportExportModal';
 import { AiSearchModal } from './components/AiSearchModal';
+import { DocumentUploaderModal } from './components/DocumentUploaderModal';
 import {
   Search,
   Plus,
@@ -54,6 +55,7 @@ export default function App() {
   const [isCheatSheetOpen, setIsCheatSheetOpen] = useState(false);
   const [isBackupOpen, setIsBackupOpen] = useState(false);
   const [isAiSearchOpen, setIsAiSearchOpen] = useState(false);
+  const [isDocUploaderOpen, setIsDocUploaderOpen] = useState(false);
   const [aiSearchQuery, setAiSearchQuery] = useState('');
   const [aiSearchVendor, setAiSearchVendor] = useState<VendorType | 'All'>('Nutanix');
 
@@ -259,6 +261,7 @@ export default function App() {
         onOpenCheatSheet={() => setIsCheatSheetOpen(true)}
         onOpenBackup={() => setIsBackupOpen(true)}
         onOpenAiSearch={() => handleOpenAiSearch()}
+        onOpenDocUploader={() => setIsDocUploaderOpen(true)}
       />
 
       {/* Main Search & Filters Bar */}
@@ -524,6 +527,14 @@ export default function App() {
         onSaveToKnowledgeBase={handleSaveFromAi}
         initialQuery={aiSearchQuery}
         initialVendor={aiSearchVendor}
+      />
+
+      <DocumentUploaderModal
+        isOpen={isDocUploaderOpen}
+        onClose={() => setIsDocUploaderOpen(false)}
+        onSaveCase={(newCase) => {
+          handleSaveCase(newCase);
+        }}
       />
 
       {/* Footer */}

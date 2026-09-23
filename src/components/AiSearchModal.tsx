@@ -12,7 +12,8 @@ import {
   BookOpen,
   Search,
   CheckCircle2,
-  BookmarkPlus
+  BookmarkPlus,
+  Download
 } from 'lucide-react';
 import { KnowledgeCase, VendorType } from '../types';
 
@@ -379,6 +380,29 @@ export const AiSearchModal: React.FC<AiSearchModalProps> = ({
                         <span>คัดลอกข้อความ</span>
                       </>
                     )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const titleHeader = query || `${vendor}-Official-KB`;
+                      const sanitized = titleHeader.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 30);
+                      const mdContent = `# Official KB: ${titleHeader}\n\nVendor: ${vendor}\n${errorCode ? `Error Code: ${errorCode}\n` : ''}${hardwareModel ? `Hardware: ${hardwareModel}\n` : ''}\n---\n\n${resultText}\n\n---\n## Official References:\n${sources.map((s) => `- [${s.title}](${s.uri})`).join('\n')}\n`;
+                      const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `KB-${vendor}-${sanitized}.md`;
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-blue-300 bg-blue-950 hover:bg-blue-900 rounded-md transition border border-blue-800"
+                    title="ดาวน์โหลดวิธีแก้จากเว็บทางการเป็นไฟล์ Markdown (.md)"
+                  >
+                    <Download className="h-3.5 w-3.5 text-blue-400" />
+                    <span>ดาวน์โหลด .MD</span>
                   </button>
 
                   <button

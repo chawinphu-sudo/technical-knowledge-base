@@ -19,9 +19,12 @@ import {
   Info,
   Layers,
   Wrench,
-  Globe
+  Globe,
+  Download,
+  FileDown
 } from 'lucide-react';
 import { KnowledgeCase } from '../types';
+import { downloadCaseAsMarkdown, downloadCaseAsJSON } from '../utils/kbExport';
 
 interface CaseDetailModalProps {
   item: KnowledgeCase | null;
@@ -171,6 +174,25 @@ ${item.workaround ? `การแก้ไขชั่วคราว (Workaroun
                   <span>คัดลอกสรุป</span>
                 </>
               )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => downloadCaseAsMarkdown(item)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-950 hover:bg-blue-900 border border-blue-800 text-blue-300 shadow-xs transition"
+              title="ดาวน์โหลดเคสนี้เป็นไฟล์เอกสาร Markdown (.md) สำหรับเก็บออฟไลน์หรือแชร์"
+            >
+              <Download className="h-3.5 w-3.5 text-blue-400" />
+              <span className="hidden sm:inline">โหลด .MD</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => downloadCaseAsJSON(item)}
+              className="p-2 rounded-xl text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
+              title="ดาวน์โหลดข้อมูลเคสเป็นไฟล์ JSON"
+            >
+              <FileDown className="h-4 w-4" />
             </button>
 
             <button

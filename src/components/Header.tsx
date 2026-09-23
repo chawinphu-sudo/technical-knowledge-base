@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, Plus, Terminal, Download, ShieldAlert, Server, Globe, Sparkles } from 'lucide-react';
+import { Database, Plus, Terminal, Download, ShieldAlert, Server, Globe, Sparkles, Upload } from 'lucide-react';
 import { KnowledgeCase } from '../types';
 
 interface HeaderProps {
@@ -8,6 +8,7 @@ interface HeaderProps {
   onOpenCheatSheet: () => void;
   onOpenBackup: () => void;
   onOpenAiSearch: () => void;
+  onOpenDocUploader: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCheatSheet,
   onOpenBackup,
   onOpenAiSearch,
+  onOpenDocUploader,
 }) => {
   const nutanixCount = cases.filter((c) => c.vendor === 'Nutanix').length;
   const lenovoCount = cases.filter((c) => c.vendor === 'Lenovo').length;
@@ -77,8 +79,19 @@ export const Header: React.FC<HeaderProps> = ({
               title="ดึงข้อมูลวิธีแก้ไขจากเว็บทางการของ Nutanix หรือ Lenovo"
             >
               <Globe className="h-3.5 w-3.5 text-indigo-400 group-hover:scale-110 transition-transform" />
-              <span>ค้นหาเว็บ Vendor</span>
-              <span className="hidden xl:inline text-3xs px-1.5 py-0.2 bg-indigo-800 text-indigo-200 rounded font-bold">AI</span>
+              <span>ดึง KB จากเว็บ</span>
+              <span className="hidden xl:inline text-3xs px-1.5 py-0.2 bg-indigo-800 text-indigo-200 rounded font-bold">Web</span>
+            </button>
+
+            <button
+              id="btn-upload-doc"
+              type="button"
+              onClick={onOpenDocUploader}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-sky-300 bg-sky-950/70 hover:bg-sky-900/80 active:bg-sky-900 rounded-xl transition-all border border-sky-700/60 shadow-xs group"
+              title="อัปโหลดไฟล์เอกสาร KB (.md / .txt) แล้วแปลงเข้าสู่ฐานข้อมูลระบบ"
+            >
+              <Upload className="h-3.5 w-3.5 text-sky-400 group-hover:scale-110 transition-transform" />
+              <span>อัปโหลด & แปลงลง DB</span>
             </button>
 
             <button
